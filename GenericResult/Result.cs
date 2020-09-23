@@ -9,6 +9,17 @@ namespace GenericResult
     /// <typeparam name="T"></typeparam>
     public class Result<T> where T : class, new()
     {
+        private bool? _ExplicitSucessfulValue;
+
+        /// <summary>
+        /// Create a result explicitly
+        /// </summary>
+        /// <param name="failed"></param>
+        public Result(bool? successful = null)
+        {
+            _ExplicitSucessfulValue = successful;
+        }
+
         /// <summary>
         /// Gets the value from a successful <see cref="Result{T}"/>
         /// </summary>
@@ -32,7 +43,9 @@ namespace GenericResult
         {
             get
             {
-                return Errors != null && Errors.Any();
+                return _ExplicitSucessfulValue.HasValue
+                    ? !_ExplicitSucessfulValue.Value
+                    : (Errors != null && Errors.Any());
             }
         }
 
@@ -43,7 +56,7 @@ namespace GenericResult
         {
             get
             {
-                return Errors == null || !Errors.Any();
+                return _ExplicitSucessfulValue ?? (Errors == null || !Errors.Any());
             }
         }
 
@@ -58,6 +71,26 @@ namespace GenericResult
             {
                 Value = value
             };
+        }
+
+        /// <summary>
+        /// Creates a successful result with a value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Result<T> Succeeds()
+        {
+            return new Result<T>(successful: true);
+        }
+
+        /// <summary>
+        /// Creates an error result
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static Result<T> Fails()
+        {
+            return new Result<T>(successful: false);
         }
 
         /// <summary>
