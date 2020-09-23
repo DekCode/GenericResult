@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Arrak Rukkharat</Authors>
+    <Copyright>2020</Copyright>
+    <PackageProjectUrl>https://github.com/DekDevTech/GenericResult</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/DekDevTech/GenericResult</RepositoryUrl>
+    <PackageTags>generic, result, results, fail, easy, success, fluent</PackageTags>
+    <RepositoryType>Git</RepositoryType>
+    <Description>A handy utility that allows a method to return a result which contains a value on success or errors on failure</Description>
   </PropertyGroup>
 
 </Project>
