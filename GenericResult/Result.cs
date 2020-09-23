@@ -9,12 +9,12 @@ namespace GenericResult
     /// <typeparam name="T"></typeparam>
     public class Result<T> where T : class, new()
     {
-        private bool? _ExplicitSucessfulValue;
+        private readonly bool? _ExplicitSucessfulValue;
 
         /// <summary>
         /// Create a result explicitly
         /// </summary>
-        /// <param name="failed"></param>
+        /// <param name="successful"></param>
         public Result(bool? successful = null)
         {
             _ExplicitSucessfulValue = successful;
