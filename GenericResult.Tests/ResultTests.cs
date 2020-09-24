@@ -26,7 +26,7 @@ namespace GenericResult.Tests
             };
 
             // Act
-            var result = Result<Client>.Succeeds(client);
+            var result = Result.Succeed(client);
 
             // Assert
             Assert.True(result.IsSuccessful);
@@ -44,11 +44,10 @@ namespace GenericResult.Tests
             var message = Guid.NewGuid().ToString();
 
             // Act
-            var result = Result<Client>.Fails(message);
+            var result = Result.Fail(message);
 
             // Assert
             Assert.False(result.IsSuccessful);
-            Assert.Null(result.Value);
 
             Assert.True(result.IsFailed);
             Assert.NotEmpty(result.Errors);
@@ -66,11 +65,10 @@ namespace GenericResult.Tests
             }
 
             // Act
-            var result = Result<Client>.Fails(messages);
+            var result = Result.Fail(messages);
 
             // Assert
             Assert.False(result.IsSuccessful);
-            Assert.Null(result.Value);
 
             Assert.True(result.IsFailed);
             Assert.NotEmpty(result.Errors);
@@ -84,11 +82,10 @@ namespace GenericResult.Tests
             // Arrange
 
             // Act
-            var result = Result<Client>.Fails();
+            var result = Result.Fail();
 
             // Assert
             Assert.False(result.IsSuccessful);
-            Assert.Null(result.Value);
 
             Assert.True(result.IsFailed);
             Assert.Empty(result.Errors);
@@ -101,15 +98,59 @@ namespace GenericResult.Tests
             // Arrange
 
             // Act
-            var result = Result<Client>.Succeeds();
+            var result = Result.Succeed();
 
             // Assert
             Assert.True(result.IsSuccessful);
-            Assert.Null(result.Value);
 
             Assert.False(result.IsFailed);
             Assert.Empty(result.Errors);
             Assert.Null(result.Error);
+        }
+
+        [Fact]
+        public void Fail_Integrity()
+        {
+            // Void result
+            Assert.False(Result.Fail().IsSuccessful);
+            Assert.False(Result.Fail("message").IsSuccessful);
+            Assert.False(Result.Fail(new List<string> { "message1", "message2" }).IsSuccessful);
+
+            // Return result
+            Assert.False(Result.Fail<Client>().IsSuccessful);
+            Assert.False(Result.Fail<Client>("message").IsSuccessful);
+            Assert.False(Result.Fail<Client>(new List<string> { "message1", "message2" }).IsSuccessful);
+
+            Assert.True(Result.Fail().IsFailed);
+            Assert.True(Result.Fail("message").IsFailed);
+            Assert.True(Result.Fail(new List<string> { "message1", "message2" }).IsFailed);
+
+            // Return result
+            Assert.True(Result.Fail<Client>().IsFailed);
+            Assert.True(Result.Fail<Client>("message").IsFailed);
+            Assert.True(Result.Fail<Client>(new List<string> { "message1", "message2" }).IsFailed);
+        }
+
+        [Fact]
+        public void Suceed_Integrity()
+        {
+            // Void result
+            Assert.True(Result.Succeed().IsSuccessful);
+            Assert.True(Result.Succeed("message").IsSuccessful);
+            Assert.True(Result.Succeed(new List<string> { "message1", "message2" }).IsSuccessful);
+
+            // Return result
+            Assert.True(Result.Succeed((Client)null).IsSuccessful);
+            Assert.True(Result.Succeed(new Client()).IsSuccessful);
+
+            // Void result
+            Assert.False(Result.Succeed().IsFailed);
+            Assert.False(Result.Succeed("message").IsFailed);
+            Assert.False(Result.Succeed(new List<string> { "message1", "message2" }).IsFailed);
+
+            // Return result
+            Assert.False(Result.Succeed((Client)null).IsFailed);
+            Assert.False(Result.Succeed(new Client()).IsFailed);
         }
     }
 }

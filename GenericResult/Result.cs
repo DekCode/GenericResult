@@ -3,23 +3,151 @@ using System.Linq;
 
 namespace GenericResult
 {
-    /// <summary>
-    /// A result which contains a value on success or errors on failure
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Result<T> where T : class, new()
+    public abstract class ResultBase<TValue> where TValue : ResultBase<TValue>
     {
-        private readonly bool? _ExplicitSucessfulValue;
 
+    }
+
+    /// <summary>
+    /// Use this to create a result
+    /// </summary>
+    public partial class Result
+    {
         /// <summary>
-        /// Create a result explicitly
+        /// Creates a successful result
         /// </summary>
-        /// <param name="successful"></param>
-        public Result(bool? successful = null)
+        /// <returns></returns>
+        public static Result Succeed()
         {
-            _ExplicitSucessfulValue = successful;
+            return new Result(true);
         }
 
+        /// <summary>
+        /// Creates a failed result
+        /// </summary>
+        /// <returns></returns>
+        public static Result Fail()
+        {
+            return new Result(false);
+        }
+
+        /// <summary>
+        /// Creates an error result with a message
+        /// </summary>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+        public static Result Fail(string errorMessage)
+        {
+            return new Result(errorMessage);
+        }
+
+        /// <summary>
+        /// Creates an error result with a list of messages
+        /// </summary>
+        /// <param name="errorMessages"></param>
+        /// <returns></returns>
+        public static Result Fail(List<string> errorMessages)
+        {
+            return new Result(errorMessages);
+        }
+
+        /// <summary>
+        /// Creates a successful result with a value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Result<T> Succeed<T>(T value)
+        {
+            return new Result<T>()
+                .Succeed(value);
+        }
+
+        /// <summary>
+        /// Creates an error result
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+        public static Result<T> Fail<T>()
+        {
+            return new Result<T>()
+                .Fail((string)null);
+        }
+
+        /// <summary>
+        /// Creates an error result with a message
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+        public static Result<T> Fail<T>(string errorMessage)
+        {
+            return new Result<T>()
+                .Fail(errorMessage);
+        }
+
+        /// <summary>
+        /// Creates an error result with a list of messages
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="errorMessages"></param>
+        /// <returns></returns>
+        public static Result<T> Fail<T>(List<string> errorMessages)
+        {
+            return new Result<T>()
+                .Fail(errorMessages);
+        }
+    }
+
+    /// <summary>
+    /// Represents a result without a value
+    /// </summary>
+    public partial class Result : ResultBase<Result>
+    {
+        /// <summary>
+        /// Indicates that the result has failed
+        /// </summary>
+        public bool IsFailed => !IsSuccessful;
+
+        /// <summary>
+        /// Indicates that the result has succeeded
+        /// </summary>
+        public bool IsSuccessful { get; private set; }
+
+        /// <summary>
+        /// Gets a list of error messagages from a failed <see cref="Result{T}"/>
+        /// </summary>
+        public List<string> Errors { get; private set; } = new List<string>();
+
+        /// <summary>
+        /// Gets an error messagages from a failed <see cref="Result{T}"/>
+        /// This returns the first error message if there are multiple.
+        /// </summary>
+        public string Error => Errors.FirstOrDefault();
+
+        public Result(bool sucessful)
+        {
+            IsSuccessful = sucessful;
+        }
+
+        public Result(string errorMessage)
+        {
+            Errors = new List<string> { errorMessage };
+        }
+
+        public Result(List<string> errorMessages)
+        {
+            Errors = errorMessages ?? new List<string>();
+        }
+    }
+
+    /// <summary>
+    /// Represents a result which contains a value on success or errors on failure
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class Result<T> : ResultBase<Result<T>>
+    {
         /// <summary>
         /// Gets the value from a successful <see cref="Result{T}"/>
         /// </summary>
@@ -39,87 +167,30 @@ namespace GenericResult
         /// <summary>
         /// Indicates that the result has failed
         /// </summary>
-        public bool IsFailed
-        {
-            get
-            {
-                return _ExplicitSucessfulValue.HasValue
-                    ? !_ExplicitSucessfulValue.Value
-                    : (Errors != null && Errors.Any());
-            }
-        }
+        public bool IsFailed => !IsSuccessful;
 
         /// <summary>
         /// Indicates that the result has succeeded
         /// </summary>
-        public bool IsSuccessful
+        public bool IsSuccessful { get; private set; }
+
+        public Result<T> Succeed(T value)
         {
-            get
-            {
-                return _ExplicitSucessfulValue ?? (Errors == null || !Errors.Any());
-            }
+            Value = value;
+            IsSuccessful = true;
+            return this;
         }
 
-        /// <summary>
-        /// Creates a successful result with a value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static Result<T> Succeeds(T value)
+        public Result<T> Fail(string errorMessage)
         {
-            return new Result<T>
-            {
-                Value = value
-            };
+            Errors = new List<string> { errorMessage };
+            return this;
         }
 
-        /// <summary>
-        /// Creates a successful result with a value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static Result<T> Succeeds()
+        public Result<T> Fail(List<string> errorMessages)
         {
-            return new Result<T>(successful: true);
-        }
-
-        /// <summary>
-        /// Creates an error result
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static Result<T> Fails()
-        {
-            return new Result<T>(successful: false);
-        }
-
-        /// <summary>
-        /// Creates an error result with a list of messages
-        /// </summary>
-        /// <param name="messages"></param>
-        /// <returns></returns>
-        public static Result<T> Fails(List<string> messages)
-        {
-            return new Result<T>
-            {
-                Errors = messages ?? new List<string>()
-            };
-        }
-
-        /// <summary>
-        /// Creates an error result with a message
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static Result<T> Fails(string message)
-        {
-            return new Result<T>
-            {
-                Errors = new List<string>()
-                {
-                    message
-                }
-            };
+            Errors = errorMessages ?? new List<string>();
+            return this;
         }
     }
 }
