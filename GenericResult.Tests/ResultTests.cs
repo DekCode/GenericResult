@@ -152,5 +152,29 @@ namespace Decepticon.GenericResult.Tests
             Assert.False(Result.Succeed((Client)null).IsFailed);
             Assert.False(Result.Succeed(new Client()).IsFailed);
         }
+
+
+
+        void ResultDemo()
+        {
+            var result = Divide(108.0, 9);
+            if (result.IsFailed)
+            {
+                Console.WriteLine(result.Error);
+            }
+
+            Console.WriteLine(result.Value);
+        }
+
+        Result<double> Divide(double dividen, double divider)
+        {
+            if (divider == 0.0)
+            {
+                Result.Fail("Cannot divide by zero");
+            }
+
+            var someNumber = dividen / divider;
+            return Result.Succeed(someNumber);
+        }
     }
 }
