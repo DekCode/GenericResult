@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace GenericResult.Tests.Models
+namespace Decepticon.GenericResult.Tests.Models
 {
     public class Client
     {

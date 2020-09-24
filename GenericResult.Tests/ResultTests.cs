@@ -1,10 +1,10 @@
-using GenericResult.Tests.Models;
+using Decepticon.GenericResult.Tests.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace GenericResult.Tests
+namespace Decepticon.GenericResult.Tests
 {
     public class ResultTests
     {

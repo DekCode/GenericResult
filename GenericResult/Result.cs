@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace GenericResult
+namespace Decepticon.GenericResult
 {
     public abstract class ResultBase<TValue> where TValue : ResultBase<TValue>
     {

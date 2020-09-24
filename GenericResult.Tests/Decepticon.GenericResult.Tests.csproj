@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GenericResult\GenericResult.csproj" />
+    <ProjectReference Include="..\GenericResult\Decepticon.GenericResult.csproj" />
   </ItemGroup>
 
 </Project>

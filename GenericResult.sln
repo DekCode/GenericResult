@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericResult", "GenericResult\GenericResult.csproj", "{383EF361-595F-4237-9CF0-7C06D075C3BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decepticon.GenericResult", "GenericResult\Decepticon.GenericResult.csproj", "{383EF361-595F-4237-9CF0-7C06D075C3BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericResult.Tests", "GenericResult.Tests\GenericResult.Tests.csproj", "{BA1187F1-CAEB-4785-AA71-8BCB6D6DC7EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decepticon.GenericResult.Tests", "GenericResult.Tests\Decepticon.GenericResult.Tests.csproj", "{BA1187F1-CAEB-4785-AA71-8BCB6D6DC7EE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{383EF361-595F-4237-9CF0-7C06D075C3BC} = {383EF361-595F-4237-9CF0-7C06D075C3BC}
 	EndProjectSection
