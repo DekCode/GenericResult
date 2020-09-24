@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
@@ -11,9 +11,9 @@
     <PackageProjectUrl>https://github.com/DekDevTech/GenericResult</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/DekDevTech/GenericResult</RepositoryUrl>
-    <PackageTags>generic result results fail easy success fluent</PackageTags>
+    <PackageTags>generic result results fail easy success fluent lightweight</PackageTags>
     <RepositoryType>Git</RepositoryType>
-    <Description>A handy utility that allows a method to return a result which contains a value on success or errors on failure</Description>
+    <Description>A supper lightweight handy utility that to return a result with a value on success or errors on failure</Description>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
