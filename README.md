@@ -1,5 +1,4 @@
 A supper lightweight handy utility to return a result with a value on success or errors on failure. Better error handling.
-Inspired by `FluentResult`
 
 ## Quickly why?
 - Results with errors allow you to handle errors in your application properly. Let's say a function that returns a boolean can be `true`, `false`, or errors.

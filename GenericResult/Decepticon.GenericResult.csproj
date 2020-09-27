@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Arrak Rukkharat</Authors>
     <Copyright>2020</Copyright>
     <Title>Decepticon.GenericResult</Title>
@@ -13,10 +14,11 @@
     <RepositoryUrl>https://github.com/DekDevTech/GenericResult</RepositoryUrl>
     <PackageTags>generic result results fail easy success fluent lightweight</PackageTags>
     <RepositoryType>Git</RepositoryType>
-    <Description>A supper lightweight handy utility to return a result with a value on success or errors on failure. Better error handling.</Description>
+    <Description>A super lightweight handy utility to return a result with a value on success or errors on failure. Better error handling.</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>Include doc summaries</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

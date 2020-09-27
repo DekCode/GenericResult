@@ -67,7 +67,6 @@ namespace Decepticon.GenericResult
         /// Creates an error result
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="errorMessage"></param>
         /// <returns></returns>
         public static Result<T> Fail<T>()
         {
@@ -126,9 +125,9 @@ namespace Decepticon.GenericResult
         /// </summary>
         public string Error => Errors.FirstOrDefault();
 
-        public Result(bool sucessful)
+        public Result(bool successful)
         {
-            IsSuccessful = sucessful;
+            IsSuccessful = successful;
         }
 
         public Result(string errorMessage)
